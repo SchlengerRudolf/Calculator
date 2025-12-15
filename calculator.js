@@ -18,7 +18,7 @@ function divide(one, two) {
     return one / two;
 }
 
-function operator(op, one, two) {
+function operate(op, one, two) {
     switch(op) {
         case "+": return add(one, two);
         case "-": return subtract(one, two);
