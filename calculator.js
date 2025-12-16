@@ -85,9 +85,9 @@ function operaterCalc(op) {
     //Change negative number to positiv
     else if (displayValue === "-" && op === "+") {
         displayValue = "";
-        display.textContent = display.textContent.replace("-", "");
+        display.textContent = display.textContent.slice(0, -1);
     }
-    else if (operater === "") {
+    else if (operater === "" && displayValue !== "-" && (displayValue !== "" || pointer === 3)) {
         displayValue = "";
         pointer = 2;
         operater = op;
