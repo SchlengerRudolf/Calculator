@@ -50,9 +50,13 @@ function equalCalc() {
 
 function numberCalc(num) {
     if (pointer === 1) {
-        if (numOne !== 0) displayValue += num;
-        else displayValue = num.toString();
-        numOne = num;        
+        if (numOne !== 0) {
+            displayValue += num;
+        }
+        else {
+            displayValue = num.toString();
+            numOne = num;
+        }        
     }
     else {
         if (numTwo !== 0) displayValue += num;
