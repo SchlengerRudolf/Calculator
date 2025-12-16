@@ -1,8 +1,8 @@
 let numOne = 0;
 let numTwo = 0;
 let pointer = 1;
-let op = "+";
-let displayValue = "0";
+let op = "";
+let displayValue = "";
 
 function add(one, two) {
     return one + two;
@@ -33,11 +33,14 @@ const display = document.getElementById("display")
 const buttons = document.querySelectorAll("button")
 
 function equalCalc() {
+    //Missing operator to calculate
+    if (op === "") {
+        return;
+    }
     //Check if 0 / 0 gives problem
-    if (numTwo === 0 && op === "÷") {
+    else if (numTwo === 0 && op === "÷") {
         alert("You can't divide by zero");
     }
-
     else {
         const newValue = operate(op, numOne, numTwo);
 
@@ -45,22 +48,28 @@ function equalCalc() {
         display.textContent = displayValue;
         numOne = newValue;
         numTwo = 0;
+        pointer = 2;
+        displayValue = "";
+        op = "";
     }
 }
 
 function numberCalc(num) {
     if (pointer === 1) {
-        if (numOne !== 0) {
             displayValue += num;
-        }
-        else {
-            displayValue = num.toString();
-            numOne = num;
-        }        
+            display.textContent += num;
+            numOne = Number(displayValue);       
+    }
+    //The case after operate where you start a fresh calculation,
+    //if a number is your first input
+    else if (pointer === 2 && op === "") {
+        clearCalc();
+        numberCalc(num);
     }
     else {
-        if (numTwo !== 0) displayValue += num;
-        els
+        displayValue += num;
+        display.textContent += num;
+        numTwo = Number(displayValue);
     } 
 }
 
@@ -68,9 +77,9 @@ function clearCalc() {
     numOne = 0;
     numTwo = 0;
     pointer = 1;
-    op = "+";
-    displayValue = "0";
-    display.textContent = "0";
+    op = "";
+    displayValue = "";
+    display.textContent = "";
 }
 
 function calc() {
@@ -78,7 +87,8 @@ function calc() {
         btn.addEventListener("click", () => {
             if (btn.textContent === "Clear") clearCalc();
             else if (btn.textContent === "=") equalCalc();
-        
+            else if (btn.textContent === "x") return;
+            else numberCalc(Number(btn.textContent));  
         })
     })
 }
