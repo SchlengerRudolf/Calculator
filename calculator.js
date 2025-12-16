@@ -1,7 +1,7 @@
 let numOne = 0;
 let numTwo = 0;
 let pointer = 1;
-let op = "";
+let operater = "";
 let displayValue = "";
 
 function add(one, two) {
@@ -20,12 +20,12 @@ function divide(one, two) {
     return one / two;
 }
 
-function operate(op, one, two) {
-    switch(op) {
+function operate(operater, one, two) {
+    switch(operater) {
         case "+": return add(one, two);
         case "-": return subtract(one, two);
-        case "*": return multiply(one, two);
-        case "/": return divide(one, two);
+        case "x": return multiply(one, two);
+        case "÷": return divide(one, two);
     }
 }
 
@@ -34,23 +34,24 @@ const buttons = document.querySelectorAll("button")
 
 function equalCalc() {
     //Missing operator to calculate
-    if (op === "") {
+    if (operater === "") {
         return;
     }
     //Check if 0 / 0 gives problem
-    else if (numTwo === 0 && op === "÷") {
-        alert("You can't divide by zero");
+    else if (numTwo === 0 && operater === "÷") {
+        alert("ERROR! You can't divide by zero");
+        clearCalc();
     }
     else {
-        const newValue = operate(op, numOne, numTwo);
+        const newValue = operate(operater, numOne, numTwo);
 
         displayValue = newValue;
         display.textContent = displayValue;
         numOne = newValue;
         numTwo = 0;
-        pointer = 2;
+        pointer = 3;
         displayValue = "";
-        op = "";
+        operater = "";
     }
 }
 
@@ -62,7 +63,7 @@ function numberCalc(num) {
     }
     //The case after operate where you start a fresh calculation,
     //if a number is your first input
-    else if (pointer === 2 && op === "") {
+    else if (pointer === 3 && operater === "") {
         clearCalc();
         numberCalc(num);
     }
@@ -73,11 +74,30 @@ function numberCalc(num) {
     } 
 }
 
+function operaterCalc(op) {
+    //Creating negative number
+    if (displayValue === "" && op === "-" && pointer !== 3) {
+            displayValue += op;
+            display.textContent += op;
+    }
+    //Change negative number to positiv
+    else if (displayValue === "-" && op === "+") {
+        displayValue = "";
+        display.textContent = display.textContent.replace("-", "");
+    }
+    else if (operater === "") {
+        displayValue = "";
+        pointer = 2;
+        operater = op;
+        display.textContent += op;
+    }
+}
+
 function clearCalc() {
     numOne = 0;
     numTwo = 0;
     pointer = 1;
-    op = "";
+    operater = "";
     displayValue = "";
     display.textContent = "";
 }
@@ -87,8 +107,8 @@ function calc() {
         btn.addEventListener("click", () => {
             if (btn.textContent === "Clear") clearCalc();
             else if (btn.textContent === "=") equalCalc();
-            else if (btn.textContent === "x") return;
-            else numberCalc(Number(btn.textContent));  
+            else if(Number.isInteger(Number(btn.textContent))) return numberCalc(Number(btn.textContent)); 
+            else  operaterCalc(btn.textContent); 
         })
     })
 }
