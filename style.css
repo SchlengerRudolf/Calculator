@@ -22,6 +22,8 @@
  }
 
  #display {
+    
+    min-height: 25px;
     margin: 4px 0;
     padding: 16px;
     background-color: white;

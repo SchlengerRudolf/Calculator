@@ -1,6 +1,9 @@
+// 1 points to start of a calculation
+// 2 points to second half of a calculation
+// 3 points to a result
+let pointer = 1;
 let numOne = 0;
 let numTwo = 0;
-let pointer = 1;
 let operater = "";
 let displayValue = "";
 
@@ -37,7 +40,6 @@ function equalCalc() {
     if (operater === "") {
         return;
     }
-    //Check if 0 / 0 gives problem
     else if (numTwo === 0 && operater === "÷") {
         alert("ERROR! You can't divide by zero");
         clearCalc();
@@ -89,7 +91,7 @@ function operaterCalc(op) {
         displayValue = "";
         pointer = 2;
         operater = op;
-        display.textContent += op;
+        display.textContent += (" " + op + " ");
     }
 }
 
